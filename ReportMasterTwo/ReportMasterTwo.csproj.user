@@ -1,0 +1,15 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <StartArguments>"\\er1\common\bfi_apps\ReportMasterTwo\eds\join.rmt" "mailto:apeterson@burnettefoods.com"</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <StartArguments>"\\er1\common\bfi_apps\ReportMasterTwo\eds\edsoday.rmt" "mailto:anthonypete@gmail.com"</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <StartArguments>"O:\bfi_apps\ReportMasterTwo\401k\4k401k.rmt" "P:\principal\401k.csv"</StartArguments>
+    <RemoteDebugEnabled>false</RemoteDebugEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <StartArguments>"\\er1\common\bfi_apps\ReportMasterTwo\eds\edsoday.rmt" "mailto:anthonypete@gmail.com"</StartArguments>
+  </PropertyGroup>
+</Project>

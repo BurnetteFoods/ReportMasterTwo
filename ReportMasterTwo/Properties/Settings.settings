@@ -1,0 +1,22 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ReportMasterTwo.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RMFConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=FLQQVD1-ERAAP\SQLEXPRESS;Initial Catalog=RMF;Integrated Security=True;Pooling=False&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=FLQQVD1-ERAAP\SQLEXPRESS;Initial Catalog=RMF;Integrated Security=True;Pooling=False</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Dsn=SOTAMAS90;uid=jt;description=MAS 90 4.0 ODBC Driver;directory=\\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90;prefix=\\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90\SY\, \\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90\==\;viewdll=\\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90\HOME;cachesize=4;dirtyreads=1;burstmode=1;striptrailingspaces=1;server=NotTheServer&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.Odbc&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Dsn=SOTAMAS90;uid=jt;description=MAS 90 4.0 ODBC Driver;directory=\\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90;prefix=\\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90\SY\, \\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90\==\;viewdll=\\Er2\apps\Program Files\Sage Software\MAS 200\Version4\MAS90\HOME;cachesize=4;dirtyreads=1;burstmode=1;striptrailingspaces=1;server=NotTheServer</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
