@@ -7,13 +7,20 @@ namespace ReportMasterTwo
 {
     public class PrettyPrinter
     {
+        static int linesPrinted = 0;
+        static int charactersPrinted = 0;
+
         private int MaxRowDepth;
         private List<TextFormat> Formats;
+        private StreamWriter sw;
+        private List<String> out_lines;
 
-        public PrettyPrinter(List<TextFormat> f, int d)
+        public PrettyPrinter(List<TextFormat> f, int d, StreamWriter Writer, List<String> out_lines)
         {
             Formats = f;
             MaxRowDepth = d;
+            sw = Writer;
+            this.out_lines = out_lines;
         }
 
         public void Write(string fileName, int recordCount, out string result, OutputStyle outputMode, bool headerRecord)
@@ -33,8 +40,7 @@ namespace ReportMasterTwo
         public void WriteCSV(string fileName, int recordCount, out string result, bool headerRecord)
         {
             result = "";
-            StreamWriter sw = new StreamWriter(fileName);
-
+            
             if (headerRecord)
             {
                 string t = "";
@@ -65,12 +71,13 @@ namespace ReportMasterTwo
                 }
 
                 sw.WriteLine(t);
+                out_lines.Add(t);
             }
 
             string temp = "";
 
             // TESTING ONLY!!!!!
-            sw.WriteLine("TESTING!12345");
+            //sw.WriteLine("TESTING!12345");
             // TESTING ONLY!!!!!
 
             for (int k = 0; k < recordCount; k++)
@@ -88,7 +95,7 @@ namespace ReportMasterTwo
                 sw.WriteLine(temp);
             }
 
-            sw.Close();
+            sw.Flush();
         }
 
         public void WriteFixedWidth(string fileName, int recordCount, out string result, bool headerRecord)
@@ -97,7 +104,6 @@ namespace ReportMasterTwo
                 throw new InvalidOperationException("Header Record output is currently unsupported for Fixed Width reports");
 
             result = "";
-            StreamWriter sw = new StreamWriter(fileName);
 
             string tempBuild = "";
 
@@ -134,7 +140,6 @@ namespace ReportMasterTwo
             }
 
             sw.Flush();
-            sw.Close();
         }
 
         public void ProcessNewlines(StreamWriter sw, string append)
@@ -142,16 +147,28 @@ namespace ReportMasterTwo
             int searchIndex = -1;
             int oldIndex = -1;
 
+            string line;
+
             do
             {
                 searchIndex = append.IndexOf('\n', searchIndex + 1);
 
                 if (searchIndex != -1)
                 {
-                    sw.WriteLine(append.Substring(oldIndex + 1, searchIndex - (oldIndex + 1)));
+                    line = append.Substring(oldIndex + 1, searchIndex - (oldIndex + 1));
+                    sw.WriteLine(line);
+                    out_lines.Add(line);
+                    linesPrinted++;
+                    charactersPrinted += searchIndex - (oldIndex + 1);
                 }
                 else
-                    sw.WriteLine(append.Substring(oldIndex + 1));
+                {
+                    line = append.Substring(oldIndex + 1);
+                    sw.WriteLine(line);
+                    out_lines.Add(line);
+                    linesPrinted++;
+                    charactersPrinted += append.Length - (oldIndex + 1);
+                }
 
                 oldIndex = searchIndex;
             } while (searchIndex != -1);

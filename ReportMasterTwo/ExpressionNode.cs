@@ -67,27 +67,29 @@ namespace ReportMasterTwo
             Val = Val.TrimStart(null);
             Val = Val.TrimEnd(null);
 
-            if (Val.StartsWith("LITERAL:", StringComparison.InvariantCultureIgnoreCase))
+            string v = Val.Replace(" ", "");
+
+            if (v.StartsWith("LITERAL:", StringComparison.InvariantCultureIgnoreCase))
             {
                 return EvalLiteral(recordCount);
             }
-            else if (Val.StartsWith("PARAM:", StringComparison.InvariantCultureIgnoreCase))
+            else if (v.StartsWith("PARAM:", StringComparison.InvariantCultureIgnoreCase))
             {
                 return EvalParam(recordCount);
             }
-            else if (Val[0] == '=')
+            else if (v[0] == '=')
             {
                 if (Left == null && Right == null)
                 {
-                    Val = Val.Substring(1).TrimStart(null);
+                    v = v.Substring(1).TrimStart(null);
 
-                    if (!map.ContainsKey(Val))
+                    if (!map.ContainsKey(v))
                     {
                         return EvalNumeric(recordCount);
                     }
                     else
                     {
-                        return (map[Val]);
+                        return (map[v]);
                     }
                 }
                 else
@@ -97,10 +99,10 @@ namespace ReportMasterTwo
             }
             else
             {
-                if (!map.ContainsKey(Val))
+                if (!map.ContainsKey(v))
                     return (EvalNumeric(recordCount));
 
-                return (map[Val]);
+                return (map[v]);
             }
         }
 
@@ -271,9 +273,9 @@ namespace ReportMasterTwo
                 {
                     numericVal = Convert.ToDouble(Val);
                 }
-                catch (InvalidCastException)
+                catch (FormatException)
                 {
-                    throw new ArgumentException("Invalid Expression Node");
+                    temp.Add(Val);
                 }
 
                 for (int i = 0; i < recordCount; i++)
@@ -329,6 +331,13 @@ namespace ReportMasterTwo
             if (Val.StartsWith("=IF"))
             {
                 ProcessIF();
+            }
+            // val of whitespace
+            else if (Val == "=")
+            {
+                Val = "Literal: ";
+                Left = null;
+                Right = null;
             }
             else if (Val.Substring(1).TrimStart(null)[0] == '{')
             {

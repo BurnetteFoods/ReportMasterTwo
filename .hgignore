@@ -1,0 +1,11 @@
+syntax: glob
+Debug/*
+Release/*
+bin/*
+*.suo
+gms2.suo
+*.exe
+*.lnk
+GMS artwork/Thumbs.db
+GMS2/Thumbs.db
+Thumbs.*

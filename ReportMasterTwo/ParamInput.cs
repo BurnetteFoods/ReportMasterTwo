@@ -67,7 +67,7 @@ namespace ReportMasterTwo
             return val;
         }
 
-        public void search(string line)
+        public string search(string line)
         {
             if (line.IndexOf("QUARTER?") != -1)
             {
@@ -79,15 +79,41 @@ namespace ReportMasterTwo
 
                 line = line.Replace("QUARTER?", "?");
             }
-            else if (line.IndexOf("YEAR?") != -1)
+
+            if (line.IndexOf("YEAR?") != -1)
             {
                 line = line.Replace("YEAR?", "?");
             }
-            else if (line.IndexOf("?") != -1 && !QuarterSelectorEnabled && !DateRangeEnabled)
+
+            if (line.IndexOf("?") != -1 && !QuarterSelectorEnabled && !DateRangeEnabled)
             {
                 DateRangeEnabled = true;
                 SelectDataRange();
             }
+
+            if (line.IndexOf("$QUARTER") != -1)
+            {
+                if(!QuarterSelectorEnabled)
+                {
+                    QuarterSelectorEnabled = true;
+                    SelectQuarter();
+                }
+
+                line = line.Replace("$QUARTER", QQuarter.ToString());
+            }
+            
+            if (line.IndexOf("$YEAR") != -1)
+            {
+                if (!QuarterSelectorEnabled)
+                {
+                    QuarterSelectorEnabled = true;
+                    SelectQuarter();
+                }
+
+                line = line.Replace("$YEAR", QYear.ToString());
+            }
+
+            return line;
         }
 
         private void SelectQuarter()

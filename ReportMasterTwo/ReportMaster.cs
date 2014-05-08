@@ -35,10 +35,12 @@ namespace ReportMasterTwo
         public OutputTypeMode OutputMode;
         public DatabaseMode DBMode;
         public string email_address;
-        public const string tempfile_base = @"c:\";
+        public const string tempfile_base = @"";
         public ParsingMode ParseMode;
         public bool HeaderRecord;
         public ParamInput paramInput;
+        public StreamWriter Writer;
+        public List<String> out_lines;
 
         public ReportMaster()
         {}
@@ -73,9 +75,13 @@ namespace ReportMasterTwo
             HeaderRecord = false;
 
             paramInput = new ParamInput();
+
+            out_lines = new List<string>();
+
+            Writer = File.CreateText(OutputFileName);
         }
 
-        public ReportMaster(string reportName, string outputName, string conn, StreamReader s)
+        public ReportMaster(string reportName, string outputName, string conn, StreamReader s, StreamWriter w)
         {
             Reader = s;
             ReportFileName = reportName;
@@ -93,7 +99,11 @@ namespace ReportMasterTwo
             DBMode = DatabaseMode.providex;
             HeaderRecord = false;
 
+            out_lines = new List<string>();
+
             paramInput = new ParamInput();
+
+            Writer = w;
         }
 
         public void Run()
@@ -107,6 +117,7 @@ namespace ReportMasterTwo
             ProcessExpressions();
             FormatResults();
             Reader.Close();
+            Writer.Close();
         }
 
         public List<List<API_Value>> APIMode_Reentry_DB_Begin(string param)
@@ -207,8 +218,8 @@ namespace ReportMasterTwo
 
         private void RunDBQuery()
         {
-            DbConnection conn;
-            DbCommand comm;
+            DbConnection conn = null;
+            DbCommand comm = null;
 
             if (ConnString == "")
                 throw new Exception("DB Connection Error!");
@@ -294,7 +305,7 @@ namespace ReportMasterTwo
 
             int maxDepth = FormatData[FormatData.Count - 1].Row;
 
-            PrettyPrinter pp = new PrettyPrinter(FormatData, maxDepth);
+            PrettyPrinter pp = new PrettyPrinter(FormatData, maxDepth, Writer, out_lines);
             string temp = "";
             pp.Write(OutputFileName, RecordCount, out temp, OperatingMode, HeaderRecord);
 
@@ -320,7 +331,11 @@ namespace ReportMasterTwo
                 throw new ArgumentException("Invalid Formatting File");
             }
             
-            DetailReport = new ReportMaster(ReportFileName, OutputFileName, ConnString, sr);
+            DetailReport = new ReportMaster(ReportFileName, OutputFileName, ConnString, sr, Writer);
+
+            // carry the params into the detail
+            DetailReport.paramInput = paramInput;
+            
             DetailReport.ReadReportFile();
 
             line = line.Substring(17);
@@ -445,7 +460,8 @@ namespace ReportMasterTwo
 
             while ((line = sr.ReadLine()) != "#Report End#")
             {
-                paramInput.search(line);
+                line = paramInput.search(line);
+
 
                 sqlTemp += line;
             }
@@ -456,6 +472,8 @@ namespace ReportMasterTwo
             int selectIndex = sqlTemp.IndexOf("SELECT");
 
             sqlTemp = sqlTemp.Substring(selectIndex + 6, sqlTemp.IndexOf("FROM") - (selectIndex + 6));
+
+            sqlTemp = sqlTemp.Replace(" ", "");
 
             List<string> names = SplitOnParenClear(sqlTemp);
                 

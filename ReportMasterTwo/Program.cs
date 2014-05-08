@@ -11,8 +11,8 @@ namespace ReportMasterTwo
         [STAThread]
         static void Main(string[] args)
         {
-            try
-            {
+    //        try
+    //        {
                 if (args.Length == 2)
                 {   // ReportMasterTwo ReportName OutputName
                     string oconnS = @"Dsn=SOTAMAS90";
@@ -25,7 +25,7 @@ namespace ReportMasterTwo
                     System.Console.WriteLine("Usage:");
                     System.Console.WriteLine("ReportMasterTwo ReportFileName OutputFileName");
                 }
-            }
+ /*           }
             catch (Exception e)
             {
                 System.Console.Error.WriteLine(e.ToString());
@@ -34,6 +34,7 @@ namespace ReportMasterTwo
                 string line = System.Console.ReadLine();
                 System.Console.WriteLine(line + " you said");
             }
+  */
         }
     }
 }
