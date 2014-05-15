@@ -77,8 +77,6 @@ namespace ReportMasterTwo
             paramInput = new ParamInput();
 
             out_lines = new List<string>();
-
-            Writer = File.CreateText(OutputFileName);
         }
 
         public ReportMaster(string reportName, string outputName, string conn, StreamReader s, StreamWriter w)
@@ -294,8 +292,10 @@ namespace ReportMasterTwo
             return linkedValues;
         }
 
-        private string FormatResults()
+        private string FormatResults() 
         {
+            Writer = File.CreateText(OutputFileName);
+
             for (int i = 0; i < FormatData.Count; i++)
             {
                 FormatData[i].AddResults(FormatLinkedValues[i]);
@@ -308,6 +308,7 @@ namespace ReportMasterTwo
             PrettyPrinter pp = new PrettyPrinter(FormatData, maxDepth, Writer, out_lines);
             string temp = "";
             pp.Write(OutputFileName, RecordCount, out temp, OperatingMode, HeaderRecord);
+            Writer.Close();
 
             if (OutputMode == OutputTypeMode.send_to_email)
             {

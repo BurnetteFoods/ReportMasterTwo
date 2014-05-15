@@ -7,7 +7,7 @@
     <StartArguments>"\\er1\common\bfi_apps\ReportMasterTwo\eds\edsoday.rmt" "mailto:anthonypete@gmail.com"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <StartArguments>"O:\bfi_apps\ReportMasterTwo\401k\4k401k.rmt" "P:\principal\401k.csv"</StartArguments>
+    <StartArguments>"\\er1\common\bfi_apps\reportmastertwo\eds\edsoday.rmt" "mailto:apeterson%40burnettefoods.com"</StartArguments>
     <RemoteDebugEnabled>false</RemoteDebugEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
