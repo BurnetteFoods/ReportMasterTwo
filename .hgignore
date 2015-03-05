@@ -9,3 +9,8 @@ gms2.suo
 GMS artwork/Thumbs.db
 GMS2/Thumbs.db
 Thumbs.*
+Backup*
+CVS*
+obj*
+*UpgradeReport*
+*DXCore*
