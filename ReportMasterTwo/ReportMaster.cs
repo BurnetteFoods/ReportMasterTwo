@@ -316,7 +316,9 @@ namespace ReportMasterTwo
 
                 MailMessage mm = new MailMessage(email_address, email_address, "Report Results", "See attached report results.");
                 mm.Attachments.Add(new Attachment(tempFilename));
-                SmtpClient client = new SmtpClient("172.16.2.4");
+
+
+                SmtpClient client = new SmtpClient(ReportMasterTwo.Properties.Settings.Default.EmailServer);
                 client.Send(mm);
             }
 
