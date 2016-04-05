@@ -11,7 +11,7 @@
     <RemoteDebugEnabled>false</RemoteDebugEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <StartArguments>"\\er1\common\bfi_apps\ReportMasterTwo\eds\edsoday.rmt" "mailto:anthonypete@gmail.com"</StartArguments>
+    <StartArguments>"c:\users\aap\desktop\topco.rmt" "mailto:apeterson%40burnettefoods.com"</StartArguments>
   </PropertyGroup>
   <PropertyGroup>
     <PublishUrlHistory />

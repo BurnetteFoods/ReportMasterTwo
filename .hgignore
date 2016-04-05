@@ -14,3 +14,4 @@ CVS*
 obj*
 *UpgradeReport*
 *DXCore*
+*.user

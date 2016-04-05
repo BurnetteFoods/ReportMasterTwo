@@ -184,6 +184,8 @@ namespace ReportMasterTwo
         {
             paramInput.process(comm, DBMode);
 
+            comm.CommandTimeout = 360;
+
             DbDataReader dr = comm.ExecuteReader();
 
             NameValueMap = new Dictionary<string, List<object>>();
