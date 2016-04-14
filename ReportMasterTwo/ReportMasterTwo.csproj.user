@@ -14,7 +14,7 @@
     <StartArguments>"c:\users\aap\desktop\topco.rmt" "mailto:apeterson%40burnettefoods.com"</StartArguments>
   </PropertyGroup>
   <PropertyGroup>
-    <PublishUrlHistory />
+    <PublishUrlHistory>publish\</PublishUrlHistory>
     <InstallUrlHistory />
     <SupportUrlHistory />
     <UpdateUrlHistory />

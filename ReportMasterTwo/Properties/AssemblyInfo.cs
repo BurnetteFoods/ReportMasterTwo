@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ReportMasterTwo")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Fixed Column and CSV Format Textual Reporting Tool")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Burnette Foods, Inc.")]
 [assembly: AssemblyProduct("ReportMasterTwo")]
-[assembly: AssemblyCopyright("Copyright ©  2008")]
+[assembly: AssemblyCopyright("Copyright Burnette Foods, Inc. ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
