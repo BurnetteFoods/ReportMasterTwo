@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseMode.cs" />
     <Compile Include="DateSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,7 +90,10 @@
       <DependentUpon>DateSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="ExpressionNode.cs" />
+    <Compile Include="OutputStyle.cs" />
+    <Compile Include="OutputTypeMode.cs" />
     <Compile Include="ParamInput.cs" />
+    <Compile Include="ParsingMode.cs" />
     <Compile Include="TextFormat.cs" />
     <Compile Include="PrettyPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

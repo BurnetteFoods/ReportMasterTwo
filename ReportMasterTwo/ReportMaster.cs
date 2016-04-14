@@ -73,7 +73,7 @@ namespace ReportMasterTwo
             DetailIndex = -1;
             OperatingMode = OutputStyle.fixed_width;
             ParseMode = ParsingMode.normal;
-            DBMode = DatabaseMode.providex;
+            DBMode = DatabaseMode.odbc;
             HeaderRecord = false;
 
             paramInput = new ParamInput();
@@ -109,7 +109,7 @@ namespace ReportMasterTwo
             DetailIndex = -1;
             OperatingMode = OutputStyle.fixed_width;
             ParseMode = ParsingMode.normal;
-            DBMode = DatabaseMode.providex;
+            DBMode = DatabaseMode.odbc;
             HeaderRecord = false;
 
             paramInput = new ParamInput();
@@ -134,7 +134,7 @@ namespace ReportMasterTwo
             DetailIndex = -1;
             OperatingMode = OutputStyle.fixed_width;
             ParseMode = ParsingMode.normal;
-            DBMode = DatabaseMode.providex;
+            DBMode = DatabaseMode.odbc;
             HeaderRecord = false;
 
             out_lines = new List<string>();
@@ -147,9 +147,6 @@ namespace ReportMasterTwo
         public void Run()
         {
             ReadReportFile();
-
-            if (OutputMode == OutputTypeMode.api)
-                return;
             
             RunDBQuery();
             ProcessExpressions();
@@ -242,7 +239,7 @@ namespace ReportMasterTwo
                 conn.Open();
                 comm = new OleDbCommand(SqlCommand, (OleDbConnection)conn);
             }
-            else if (DBMode == DatabaseMode.providex)
+            else if (DBMode == DatabaseMode.odbc)
             {
                 conn = new OdbcConnection(ConnString);
                 conn.Open();
@@ -413,15 +410,6 @@ namespace ReportMasterTwo
 
                 return;
             }
-            else if (line.StartsWith("#API Invoke Start#"))
-            {
-                if (ParseMode == ParsingMode.config)
-                {
-                    ParseMode = ParsingMode.normal;
-                }
-
-                OutputMode = OutputTypeMode.api;
-            }
             else if (line.StartsWith("#Config Start#"))
             {
                 ParseMode = ParsingMode.config;
@@ -458,7 +446,7 @@ namespace ReportMasterTwo
                 }
                 else if (value.Equals("Providex"))
                 {
-                    DBMode = DatabaseMode.providex;
+                    DBMode = DatabaseMode.odbc;
                 }
             }
         }
@@ -541,31 +529,5 @@ namespace ReportMasterTwo
 
             return inval;
         }
-    }
-
-    public enum OutputStyle
-    {
-        fixed_width,
-        csv
-    }
-
-    public enum OutputTypeMode
-    {
-        save_to_file,
-        send_to_email,
-        api
-    }
-
-    public enum DatabaseMode
-    {
-        providex,
-        sql_server,
-        access
-    }
-
-    public enum ParsingMode
-    {
-        normal,
-        config
     }
 }
