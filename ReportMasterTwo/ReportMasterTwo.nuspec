@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/BurnetteFoods/ReportMasterTwo</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial version</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes>Removed Burnete Foods specific code settings, constants and references.</releaseNotes>
+    <copyright>Copyright © Burnette Foods Inc. 2016</copyright>
     <tags>Reporting</tags>
   </metadata>
 </package>

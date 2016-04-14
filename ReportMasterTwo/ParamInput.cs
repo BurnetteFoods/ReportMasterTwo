@@ -161,7 +161,7 @@ namespace ReportMasterTwo
         {
             if (DateRangeEnabled)
             {
-                if (DBMode == DatabaseMode.providex)
+                if (DBMode == DatabaseMode.odbc)
                 {
                     ((OdbcCommand)comm).Parameters.AddWithValue("p_dr", LowerDate);
                     ((OdbcCommand)comm).Parameters.AddWithValue("p_d2", UpperDate);
@@ -179,7 +179,7 @@ namespace ReportMasterTwo
             }
             else if (QuarterSelectorEnabled)
             {
-                if (DBMode == DatabaseMode.providex)
+                if (DBMode == DatabaseMode.odbc)
                 {
                     ((OdbcCommand)comm).Parameters.AddWithValue("p_q", QQuarter);
                     ((OdbcCommand)comm).Parameters.AddWithValue("p_y", QYear);

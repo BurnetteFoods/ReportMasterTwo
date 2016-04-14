@@ -13,7 +13,7 @@ using System.Data.Common;
 
 namespace ReportMasterTwo
 {
-    public class ReportMaster
+    public sealed class ReportMaster : IDisposable
     {
         private string ReportFileName;
         private string OutputFileName;
@@ -42,10 +42,48 @@ namespace ReportMasterTwo
         public StreamWriter Writer;
         public List<String> out_lines;
 
+        private Uri emailHost;
+
         public ReportMaster()
         {}
 
         public ReportMaster(string reportName, string outputName, string conn)
+        {
+            ReportFileName = reportName;
+            
+            if (outputName.StartsWith("mailto:"))
+            {
+                OutputFileName = tempfile_base + @"attach.txt";
+                OutputMode = OutputTypeMode.send_to_email;
+                email_address = outputName.Substring(7).Trim();
+            }
+            else
+            {
+                OutputFileName = outputName;
+                OutputMode = OutputTypeMode.save_to_file;
+            }
+
+            ConnString = conn;
+            FormatData = null;
+            FieldNames = null;
+            NameValueMap = null;
+            SqlCommand = null;
+            FormatLinkedValues = null;
+            RecordCount = 0;
+            DetailIndex = -1;
+            OperatingMode = OutputStyle.fixed_width;
+            ParseMode = ParsingMode.normal;
+            DBMode = DatabaseMode.odbc;
+            HeaderRecord = false;
+
+            paramInput = new ParamInput();
+
+            out_lines = new List<string>();
+
+            emailHost = new Uri("");
+        }
+
+        public ReportMaster(string reportName, string outputName, string conn, Uri emailHost)
         {
             ReportFileName = reportName;
 
@@ -71,12 +109,14 @@ namespace ReportMasterTwo
             DetailIndex = -1;
             OperatingMode = OutputStyle.fixed_width;
             ParseMode = ParsingMode.normal;
-            DBMode = DatabaseMode.providex;
+            DBMode = DatabaseMode.odbc;
             HeaderRecord = false;
 
             paramInput = new ParamInput();
 
             out_lines = new List<string>();
+
+            this.emailHost = emailHost;
         }
 
         public ReportMaster(string reportName, string outputName, string conn, StreamReader s, StreamWriter w)
@@ -94,7 +134,7 @@ namespace ReportMasterTwo
             DetailIndex = -1;
             OperatingMode = OutputStyle.fixed_width;
             ParseMode = ParsingMode.normal;
-            DBMode = DatabaseMode.providex;
+            DBMode = DatabaseMode.odbc;
             HeaderRecord = false;
 
             out_lines = new List<string>();
@@ -107,9 +147,6 @@ namespace ReportMasterTwo
         public void Run()
         {
             ReadReportFile();
-
-            if (OutputMode == OutputTypeMode.api)
-                return;
             
             RunDBQuery();
             ProcessExpressions();
@@ -118,55 +155,27 @@ namespace ReportMasterTwo
             Writer.Close();
         }
 
-        public List<List<API_Value>> APIMode_Reentry_DB_Begin(string param)
-        {
-            DbConnection conn;
-            DbCommand comm;
-
-            if (DBMode == DatabaseMode.access)
-            {
-                conn = new OleDbConnection(ConnString);
-                conn.Open();
-                comm = new OleDbCommand(SqlCommand, (OleDbConnection)conn);
-                ((OleDbCommand)comm).Parameters.AddWithValue("@a", param);
-            }
-            else if (DBMode == DatabaseMode.providex)
-            {
-                conn = new OdbcConnection(ConnString);
-                conn.Open();
-                comm = new OdbcCommand(SqlCommand, (OdbcConnection)conn);
-                ((OdbcCommand)comm).Parameters.AddWithValue("@a", param);
-            }
-            else if (DBMode == DatabaseMode.sql_server)
-            {
-                conn = new SqlConnection(ConnString);
-                conn.Open();
-                comm = new SqlCommand(SqlCommand, (SqlConnection)conn);
-                ((SqlCommand)comm).Parameters.AddWithValue("@a", param);
-            }
-            else
-            {
-                throw new InvalidOperationException("Invalid DBMode State");
-            }
-
-            ProcessDatabaseResults(comm);
-            conn.Close();
-            ProcessExpressions();
-
-            for (int i = 0; i < FormatData.Count; i++)
-            {
-                FormatData[i].AddResults(FormatLinkedValues[i]);
-            }
-
-            FormatData.Sort(TextFormat.Comparer);
-
-            API_Printer ap = new API_Printer(FormatData);
-            return(ap.Write(RecordCount));
-        }
-
         public void FlushAll()
         {
             Reader.Close();
+        }
+
+        public void Dispose()
+        {
+            if(Reader != null)
+            {
+                Reader.Dispose();
+            }
+
+            if(Writer != null)
+            {
+                Writer.Dispose();
+            }
+
+            if(DetailReport != null)
+            {
+                DetailReport.Dispose();
+            }
         }
 
         private void ReadReportFile()
@@ -230,7 +239,7 @@ namespace ReportMasterTwo
                 conn.Open();
                 comm = new OleDbCommand(SqlCommand, (OleDbConnection)conn);
             }
-            else if (DBMode == DatabaseMode.providex)
+            else if (DBMode == DatabaseMode.odbc)
             {
                 conn = new OdbcConnection(ConnString);
                 conn.Open();
@@ -320,7 +329,7 @@ namespace ReportMasterTwo
                 mm.Attachments.Add(new Attachment(tempFilename));
 
 
-                SmtpClient client = new SmtpClient(ReportMasterTwo.Properties.Settings.Default.EmailServer);
+                SmtpClient client = new SmtpClient(emailHost.AbsoluteUri);
                 client.Send(mm);
             }
 
@@ -401,15 +410,6 @@ namespace ReportMasterTwo
 
                 return;
             }
-            else if (line.StartsWith("#API Invoke Start#"))
-            {
-                if (ParseMode == ParsingMode.config)
-                {
-                    ParseMode = ParsingMode.normal;
-                }
-
-                OutputMode = OutputTypeMode.api;
-            }
             else if (line.StartsWith("#Config Start#"))
             {
                 ParseMode = ParsingMode.config;
@@ -446,7 +446,7 @@ namespace ReportMasterTwo
                 }
                 else if (value.Equals("Providex"))
                 {
-                    DBMode = DatabaseMode.providex;
+                    DBMode = DatabaseMode.odbc;
                 }
             }
         }
@@ -529,31 +529,5 @@ namespace ReportMasterTwo
 
             return inval;
         }
-    }
-
-    public enum OutputStyle
-    {
-        fixed_width,
-        csv
-    }
-
-    public enum OutputTypeMode
-    {
-        save_to_file,
-        send_to_email,
-        api
-    }
-
-    public enum DatabaseMode
-    {
-        providex,
-        sql_server,
-        access
-    }
-
-    public enum ParsingMode
-    {
-        normal,
-        config
     }
 }
