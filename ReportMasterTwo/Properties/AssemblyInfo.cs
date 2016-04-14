@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ReportMasterTwo")]
-[assembly: AssemblyDescription("Fixed Column and CSV Format Textual Reporting Tool")]
+[assembly: AssemblyDescription("Fixed Column and CSV Format Textual Reporting Tool. ReportMasterTwo was originally created to replace a deprecated reporting tool used by Sage MAS 90/200 which allowed precise fixed column layouts of text.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Burnette Foods, Inc.")]
 [assembly: AssemblyProduct("ReportMasterTwo")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("2.3.0.0")]
-[assembly: AssemblyFileVersion("2.3.0.0")]
+[assembly: AssemblyVersion("2.4.0.0")]
+[assembly: AssemblyFileVersion("2.4.0.0")]
