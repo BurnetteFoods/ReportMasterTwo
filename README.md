@@ -13,8 +13,10 @@ Here is an example of a RMT file that specifies a report runnable by ReportMaste
     [COUNT(PR_22PerpetChkHistoryHeader.EmployeeNumber)] 01/041 {0:0000000}  
     [100*SUM(PR_22PerpetChkHistoryHeader.GrossWagesThisCheck)] 01/048 {0:0000000000000}  
     #Sql Start#  
-    SELECT 100*SUM(PR_22PerpetChkHistoryHeader.GrossWagesThisCheck), COUNT(PR_22PerpetChkHistoryHeader.EmployeeNumber) FROM  
-    PR_22PerpetChkHistoryHeader WHERE {fn QUARTER(PR_22PerpetChkHistoryHeader.CheckDate)} = $QUARTER AND {fn YEAR(PR_22PerpetChkHistoryHeader.CheckDate)} = $YEAR  
+    SELECT 100*SUM(PR_22PerpetChkHistoryHeader.GrossWagesThisCheck), COUNT(PR_22PerpetChkHistoryHeader.EmployeeNumber)
+    FROM PR_22PerpetChkHistoryHeader 
+    WHERE {fn QUARTER(PR_22PerpetChkHistoryHeader.CheckDate)} = $QUARTER 
+    AND {fn YEAR(PR_22PerpetChkHistoryHeader.CheckDate)} = $YEAR  
     #Report End#  
 
 Config Start opens the configuration
