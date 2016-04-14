@@ -17,11 +17,11 @@ Here is an example of a RMT file that specifies a report runnable by ReportMaste
     PR_22PerpetChkHistoryHeader WHERE {fn QUARTER(PR_22PerpetChkHistoryHeader.CheckDate)} = $QUARTER AND {fn YEAR(PR_22PerpetChkHistoryHeader.CheckDate)} = $YEAR  
     #Report End#  
 
-    Config Start opens the configuration
+Config Start opens the configuration
 
-    Connection-String: sets the connection string.
+Connection-String: sets the connection string.
 
-    Format Start is used in Fixed Column reports, to start the field definitions (CSV Start in CSV reports)
+Format Start is used in Fixed Column reports, to start the field definitions (CSV Start in CSV reports)
 
 Lines in the format start section should follow the syntax:
 
@@ -41,11 +41,11 @@ Here is a ReportMasterTwo style calculation, which also shows alignment:
 
     [=SO_InvoiceHeader.NonTaxableAmt + SO_InvoiceHeader.TaxableAmt - SO_InvoiceHeader.FreightAmt - SO_InvoiceHeader.SalesTaxAmt - SO_InvoiceHeader.DiscountAmt] 02/142 {0, 13:#########.00}
 
-    #sql Start# begins the SQL query section. This must be a SELECT query, not any other command.
+Sql Start begins the SQL query section. This must be a SELECT query, not any other command.
 
 params defined in the field section can be referred to by #name.
 
-    #Report End# demarcates the end of the report document.
+Report End demarcates the end of the report document.
 
 You can also define a detail subreport in a RMT file.
 
