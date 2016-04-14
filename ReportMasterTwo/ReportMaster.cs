@@ -13,7 +13,7 @@ using System.Data.Common;
 
 namespace ReportMasterTwo
 {
-    public class ReportMaster
+    public sealed class ReportMaster : IDisposable
     {
         private string ReportFileName;
         private string OutputFileName;
@@ -161,6 +161,24 @@ namespace ReportMasterTwo
         public void FlushAll()
         {
             Reader.Close();
+        }
+
+        public void Dispose()
+        {
+            if(Reader != null)
+            {
+                Reader.Dispose();
+            }
+
+            if(Writer != null)
+            {
+                Writer.Dispose();
+            }
+
+            if(DetailReport != null)
+            {
+                DetailReport.Dispose();
+            }
         }
 
         private void ReadReportFile()
