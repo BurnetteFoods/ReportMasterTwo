@@ -3,9 +3,9 @@ Fixed Column and CSV Format Textual Reporting Tool. ReportMasterTwo was original
 
 Here is an example of a RMT file that specifies a report runnable by ReportMasterTwo
 
-    &numConfig Start&num  
+    #Config Start#  
     Connection-String:Dsn=SOTAMAS90  
-    &numFormat Start&num
+    #Format Start#
     [LITERAL:E] 01/001 {0:#}  
     [LITERAL:9999999999] 01/002 {0:0000000000}  
     [PARAM:YEAR] 01/012 {0:0000}  
