@@ -7,7 +7,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("ReportMasterTwo")]
 [assembly: AssemblyDescription("Fixed Column and CSV Format Textual Reporting Tool. ReportMasterTwo was originally created to replace a deprecated reporting tool used by Sage MAS 90/200 which allowed precise fixed column layouts of text.")]
-[assembly: AssemblyConfiguration("")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 [assembly: AssemblyCompany("Burnette Foods, Inc.")]
 [assembly: AssemblyProduct("ReportMasterTwo")]
 [assembly: AssemblyCopyright("Copyright Burnette Foods, Inc. ©  2016")]
