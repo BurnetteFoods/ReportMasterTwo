@@ -80,7 +80,7 @@ namespace ReportMasterTwo
 
             out_lines = new List<string>();
 
-            emailHost = new Uri("");
+            emailHost = null;
         }
 
         public ReportMaster(string reportName, string outputName, string conn, Uri emailHost)
