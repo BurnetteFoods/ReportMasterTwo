@@ -42,7 +42,7 @@ namespace ReportMasterTwo
         public StreamWriter Writer;
         public List<String> out_lines;
 
-        private Uri emailHost;
+        private string emailHost;
 
         public ReportMaster()
         {}
@@ -83,7 +83,7 @@ namespace ReportMasterTwo
             emailHost = null;
         }
 
-        public ReportMaster(string reportName, string outputName, string conn, Uri emailHost)
+        public ReportMaster(string reportName, string outputName, string conn, string emailHost)
         {
             ReportFileName = reportName;
 
@@ -329,7 +329,7 @@ namespace ReportMasterTwo
                 mm.Attachments.Add(new Attachment(tempFilename));
 
 
-                SmtpClient client = new SmtpClient(emailHost.AbsoluteUri);
+                SmtpClient client = new SmtpClient(emailHost);
                 client.Send(mm);
             }
 
